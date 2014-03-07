@@ -1,0 +1,22 @@
+<!--<rect name="tree_box">-->	
+	<_num_tiers> 0 </_num_tiers>
+	<_item_buffer> 12 </_item_buffer>
+	<_item_side> 72 </_item_side>
+	<_tier_height>
+		<copy src="me()" trait="_item_side"/>
+		<add src="me()" trait="_item_buffer"/>
+	</_tier_height>
+	<_exclusive> 0 </_exclusive>
+	<_item_resetClicks> 0 </_item_resetClicks>
+	
+	<_width> 0 </_width>
+	<_height>
+		<copy src="me()" trait="_item_side"/>
+		<add src="me()" trait="_item_buffer"/>
+		<mul src="me()" trait="_num_tiers"/>
+	</_height>
+	
+	<locus> &true; </locus>	
+	<height> <copy src="me()" trait="_height"/> </height>
+	<width> <copy src="me()" trait="_width"/> </width>
+<!--<rect name="tree_box">-->

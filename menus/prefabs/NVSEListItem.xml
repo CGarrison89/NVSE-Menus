@@ -1,0 +1,98 @@
+<!--<hotrect name="list_item">-->
+	<clicksound> UIMenuPrevNext </clicksound>
+	<mouseoversound> UIMenuFocus </mouseoversound>
+	<depth>
+		<copy src="parent()" trait="_depth"/>
+		<add>
+			<copy src="me()" trait="_index"/>
+			<mul> 2 </mul>
+		</add>		
+	</depth>
+	<visible>
+		<copy src="parent()" trait="_number_of_items"/>
+		<gte>
+			<copy src="me()" trait="_Index"/>
+		</gte>
+		<and>
+			<copy src="parent()" trait="_number_of_visible_items"/>
+			<gte>
+				<copy src="me()" trait="_Index"/>
+			</gte>
+		</and>
+	</visible>
+	<x>
+		<copy src="parent()" trait="_item_box_buffer"/>
+		<add>
+			<copy src="parent()" trait="_bar_width"/>
+			<onlyif>
+				<copy src="parent()" trait="_bar_on_left"/>
+			</onlyif>
+		</add>
+	</x>
+	<y>
+		<copy src="parent()" trait="_item_box_buffer"/>
+		<mul src="me()" trait="_index"/>
+		<add>
+			<copy src="me()" trait="_index"/>
+			<sub> 1 </sub>
+			<mul src="parent()" trait="_item_height"/>
+		</add>
+	</y>
+	<locus> &true; </locus>
+	
+	<_selected>
+		<sub src="parent()" trait="_item_resetClicks" />
+		<add src="me()" trait="clicked" />
+		<max> 0 </max>
+		<min> 1 </min>					
+	</_selected>
+	<include src="box.xml"/>
+	<_box_visible> <copy src="me()" trait="mouseover"/> </_box_visible>
+	<width>
+		<copy src="parent()" trait="_item_width"/>
+	</width>
+	<height>
+		<copy src="parent()" trait="_item_height"/>
+	</height>
+	<text name="ListItem_Text">	
+		<alpha>
+			<copy> 255 </copy>
+			<div>
+				<copy> 2 </copy>
+				<onlyif>
+					<copy src="parent()" trait="_Faded"/>
+				</onlyif>
+			</div>
+		</alpha>	
+		<font> 2 </font>
+		
+		<x>45</x>
+		<y>
+			<copy src="parent" trait="height"/>
+			<div> 2 </div>
+			<sub> 11 </sub>
+		</y>
+		
+		<string> <copy src="parent()" trait="_Name"/> </string>
+		<justify> &left; </justify>
+	</text>
+	<image name="ListItem_Marker">			
+		<visible> 
+			<copy src="parent()" trait="_Faded"/>
+			<eq> 0 </eq>
+			<and>
+				<copy src="parent()" trait="_Checked"/> 
+				<eq> 1 </eq>
+			</and>
+		</visible>
+		<filename> Interface\Shared\Marker\square_filled.dds </filename>
+		<x> 10 </x>
+		<y>
+			<copy src="parent()" trait="height"/>
+			<sub src="me()" trait="height"/>
+			<div> 2 </div>
+		</y>
+		<width> 15 </width>
+		<height> 15 </height>
+	</image>	
+<!--<hotrect name="list_item">-->

@@ -1,0 +1,31 @@
+<!--<rect name="tree_tier">-->
+	<_num_items> 4 </_num_items>
+	<_unlocked> 0 </_unlocked>
+	<_exclusive> 0 </_exclusive>
+	<_index> 0 </_index>
+	<_width>		
+		<copy src="parent()" trait="_item_buffer"/>
+		<add>
+			<copy src="parent()" trait="_item_buffer"/>
+			<add src="parent()" trait="_item_side"/>
+			<mul src="me()" trait="_num_items"/>
+		</add>
+	</_width>
+	<_height>
+		<copy arc="parent()" trait="_tier_height"/>
+	</_height>	
+	
+	<locus> &true; </locus>
+	<height> <copy src="me()" trait="_height"/> </height>
+	<width> <copy src="me()" trait="_width"/> </width>
+	<x>
+		<copy src="parent()" trait="width"/>
+		<sub src="me()" trait="width"/>
+		<div> 2 </div>
+	</x>
+	<y>
+		<copy src="me()" trait="_index"/>
+		<sub> 1 </sub>
+		<mul src="parent()" trait="_tier_height"/>
+	</y>
+<!--<rect name="tree_tier">-->

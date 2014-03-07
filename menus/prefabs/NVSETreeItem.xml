@@ -1,0 +1,151 @@
+<!--<hotrect name="tree_item">-->	
+	<_index> 0 </_index>
+	<_chosen> 0 </_chosen>
+	<_available> 0 </_available>
+	<_faded>		
+		<copy src="parent()" trait="_unlocked"/>
+		<eq> 0 </eq>
+		<or>
+			<copy src="me()" trait="_available"/>
+			<eq> 0 </eq>
+		</or>
+		<or>
+			<copy src="parent()" trait="_exclusive"/>
+			<and>
+				<copy src="parent()" trait="_item_picked"/>
+				<eq> 1 </eq>
+				<and>
+					<copy src="me()" trait="_chosen"/>
+					<eq> 0 </eq>
+				</and>
+			</and>
+		</or>
+	</_faded>
+	<_selected>
+		<sub src="grandparent()" trait="_item_resetClicks" />
+		<add src="me()" trait="clicked" />
+		<max> 0 </max>
+		<min> 1 </min>					
+	</_selected>
+	<_icon>  </_icon>
+	
+	<_x>
+		<copy src="grandparent()" trait="_item_buffer"/>
+		<mul src="me()" trait="_index"/>
+		<add>
+			<copy src="grandparent()" trait="_item_side"/>
+			<mul>
+				<copy src="me()" trait="_index"/>
+				<sub> 1 </sub>
+			</mul>
+		</add>
+	</_x>
+	<_y>
+		<copy src="parent()" trait="height"/>
+		<sub src="me()" trait="height"/>
+		<div> 2 </div>
+	</_y>
+	<_width>
+		<copy src="grandparent()" trait="_item_side"/>
+	<_width>
+	<_height>
+		<copy src="grandparent()" trait="_item_side"/>
+	<_height>
+	<_depth>
+		<copy src="parent()" trait="depth"/>
+		<add>
+			<copy src="me()" trait="_index"/>
+			<mul> 5 </mul>
+		</add>
+	</_depth>
+	
+	<visible>
+		<onlyif>
+			<copy src="parent()" trait="_num_items"/>
+			<gte>
+				<copy src="me()" trait="_index"/>
+			</gte>
+		</onlyif>
+	</visible>
+	<target> &true; </target>
+	<mouseoversound> UIMenuFocus </mouseoversound>
+	<clicksound> UIMenuOK </clicksound>
+	<locus> &true; </locus>
+	<x> <copy src="me()" trait="_x"/> </x>
+	<y> <copy src="me()" trait="_y"/> </y>
+	<width> <copy src="me()" trait="_width"/> </width>
+	<height> <copy src="me()" trait="_height"/> </height>
+	<depth> <copy src="me()" trait="_depth"/> </depth>
+				
+	<image name="tree_item_frame">
+		<depth>
+			<copy src="parent()" trait="depth"/>
+			<add> 2 </add>
+		</depth>
+		<zoom> &scale; </zoom>
+		<width>
+			<copy src="parent()" trait="width"/>
+		</width>
+		<height>
+			<copy src="parent()" trait="height"/>
+		</height>
+		<filename>pnx\mutt\mutation_slot.dds</filename>
+		<systemcolor> &hudmain; </systemcolor>
+		<alpha>
+			<copy> 255 </copy>
+			<div>
+				<copy> 2 </copy>
+				<onlyif>
+					<copy src="parent()" trait="_faded"/>
+				</onlyif>
+			</div>
+		</alpha>	
+		<visible>
+			<copy src="parent()" trait="mouseover"/>
+			<or>
+				<copy src="parent()" trait="_chosen"/>
+			</or>
+		</visible>
+	</image>
+	
+	<image name="tree_item_icon">
+		<x>
+			<copy src="parent()" trait="width"/>
+			<sub src="me()" trait="width"/>
+			<div> 2 </div>
+		</x>
+		<y>
+			<copy src="parent()" trait="height"/>
+			<sub src="me()" trait="height"/>
+			<div> 2 </div>
+		</y>
+		<depth>
+			<copy src="parent()" trait="depth"/>
+			<add> 4 </add>
+		</depth>
+		<zoom> &scale; </zoom>
+		<width>
+			<copy src="sibling(tree_item_frame)" trait="width"/>
+			<div> 3 </div>
+			<mul> 2 </mul>
+		</width>
+		<height>
+			<copy src="sibling(tree_item_frame)" trait="height"/>
+			<div> 3 </div>
+			<mul> 2 </mul>
+		</height>
+		<filename>
+			<copy src="parent()" trait="_icon"/>
+		</filename>
+		<alpha>
+			<copy> 255 </copy>
+			<div>
+				<copy> 2 </copy>
+				<onlyif>
+					<copy src="parent()" trait="_faded"/>
+				</onlyif>
+			</div>
+		</alpha>	
+		<systemcolor> &hudmain; </systemcolor>
+	</image>
+<!--<hotrect name="tree_item">-->

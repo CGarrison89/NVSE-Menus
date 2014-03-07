@@ -1,0 +1,285 @@
+<!--<rect name="list_box">-->
+
+		<!-- Sizing info -->
+		<_width> 100 </_width>
+		<_height> 450 </_height>
+		<_bar_width> 32 </_bar_width>
+		<_x> 0 </_x>
+		<_y> 0 </_y>
+		<_depth> 0 </_depth>
+		<_item_width>
+			<copy src="me()" trait="_width"/>			
+			<sub> <copy src="me()" trait="_bar_width"/> </sub>
+			<sub>
+				<copy src="me()" trait="_item_box_buffer"/>
+				<mul> 2 </mul>
+			</sub>
+		</_item_width>
+		<_item_height>
+			<copy src="me()" trait="_height"/>
+			<sub>
+				<copy src="me()" trait="_item_box_buffer"/>
+				<mul>
+					<copy src="me()" trait="_number_of_visible_items"/>
+					<add>1</add>
+				</mul>
+			</sub>
+			<div>
+				<copy src="me()" trait="_number_of_visible_items"/>
+			</div>
+		</_item_height>
+
+		<!-- Num items / visible items in scrollbar-->
+		<_number_of_items> 20 </_number_of_items>
+		<_number_of_visible_items> 15 </_number_of_visible_items>
+		<_item_offset>0</_item_offset>
+		<_item_box_buffer> 5 </_item_box_buffer>
+		<_item_resetClicks> 0 </_item_resetClicks>
+
+		<_scroll_click_index>
+			<copy> 0 </copy>
+			<add>
+				<copy src="stepUp" trait="_selected"/>
+				<mul> 1 </mul>
+			</add>
+			<add>
+				<copy src="stepDown" trait="_selected"/>
+				<mul> 2 </mul>
+			</add>
+			<add>
+				<copy src="jumpUp" trait="_selected"/>
+				<mul> 3 </mul>
+			</add>
+			<add>
+				<copy src="jumpDown" trait="_selected"/>
+				<mul> 4 </mul>
+			</add>
+		</_scroll_click_index>
+		<!-- Step intervals for scrollbar movement-->
+		<_step_size> 1 </_step_size>
+		<_jump_size>
+			<copy src="me()" trait="_number_of_visible_items"/>
+			<sub> 1 </sub>
+		</_jump_size>
+
+		<!-- If true, draws the scroll bar on the left-->
+		<_bar_on_left> &true; </_bar_on_left>
+		
+		<height><copy src="me()" trait="_height"/></height>
+		<width><copy src="me()" trait="_width"/></width>
+		<x><copy src="me()" trait="_x"/></x>
+		<y><copy src="me()" trait="_y"/></y>
+		<locus>&true;</locus>
+			
+		<rect name="ScrollBox">
+			<visible>
+				<copy src="parent()" trait="_number_of_items"/>
+				<gt><copy src="parent()" trait="_number_of_visible_items"/></gt>
+			</visible>
+			<width> <copy src="parent()" trait="_bar_width"/> </width>
+			<height> <copy src="parent()" trait="height"/> </height>
+			<x>
+				<copy src="parent()" trait="x"/>
+				<add>
+					<copy src="parent()" trait="width"/>
+					<onlyifnot>
+						<copy src="parent()" trait="_bar_on_left"/>
+					</onlyifnot>
+				</add>				
+				<sub>
+					<copy src="me()" trait="width"/>
+					<div>2</div>
+				</sub>
+			</x>
+			<y>
+				<copy src="parent()" trait="y"/>
+			</y>	
+			
+			<image name="scrollBar">
+				<zoom> &scale; </zoom>
+				<depth>
+					<copy src="me()" trait="_depth"/>
+					<add>42</add>
+				</depth>
+				<systemcolor> &hudmain; </systemcolor>
+				<visible>
+					<copy src="grandparent()" trait="_number_of_items"/>
+					<gt>
+						<copy src="grandparent()" trait="_number_of_visible_items"/>
+					</gt>
+				</visible>
+				<y>
+					<copy src="stepUp" trait="height"/>
+					<add>
+						<copy src="grandparent()" trait="_item_offset"/>
+						<div>
+							<copy src="grandparent()" trait="_number_of_items"/>
+						</div>
+						<mul>
+							<copy src="parent()" trait="height"/>
+							<sub>
+								<copy src="stepUp" trait="height"/>
+								<add><copy src="stepDown" trait="height"/></add>
+							</sub>
+						</mul>
+					</add>
+				</y>
+				<width><copy src="parent()" trait="width"/></width>
+				<height>
+					<copy src="ScrollBox" trait="height"/>
+					<sub>
+						<copy src="stepUp" trait="height"/>
+						<add><copy src="stepDown" trait="height"/></add>
+					</sub>
+					<mul>
+						<copy src="grandparent()" trait="_number_of_visible_items"/>
+						<div>
+							<copy src="grandparent()" trait="_number_of_items"/>
+						</div>
+					</mul>
+				</height>
+				<filename>Interface\Shared\scrollbar\vert_marker.dds</filename>
+			</image>
+			
+			<hotrect name="stepUp">
+				<target> &true; </target>
+				<clicksound> UIMenuOK </clicksound>
+				<width><copy src="ScrollBox" trait="width"/></width>
+				<height>
+					<copy src="me()" trait="width"/>
+					<div>2</div>
+				</height>		
+				<_selected>
+					<sub src="grandparent()" trait="_item_resetClicks" />
+					<add src="me()" trait="clicked" />
+					<max> 0 </max>
+					<min> 1 </min>					
+				</_selected>	
+				<image name="stepUpIMG">	
+					<depth>
+						<copy src="me()" trait="_depth"/>
+						<add>2</add>
+					</depth>
+					<systemcolor>
+						<copy> &hudmain; </copy>
+						<onlyifnot src="parent()" trait="mouseover" />
+						<add>
+							<copy> &nosystemcolor; </copy>
+							<onlyif src="parent()" trait="mouseover" />
+						</add>
+					</systemcolor>
+					<x><copy src="parent()" trait="x"/></x>
+					<y><copy src="parent()" trait="y"/></y>
+					<width><copy src="parent()" trait="width"/></width>
+					<height><copy src="parent()" trait="height"/></height>
+					<filename>Interface\Shared\scrollbar\arrow_up.dds</filename>
+				</image>
+			</hotrect>	
+			
+			<hotrect name="stepDown">
+				<target> &true; </target>
+				<clicksound> UIMenuOK </clicksound>
+				<y>
+					<copy src="ScrollBox" trait="height"/>
+					<sub> <copy src="me()" trait="height"/> </sub>
+				</y>
+				<width><copy src="ScrollBox" trait="width"/></width>
+				<height>
+					<copy src="me()" trait="width"/>
+					<div>2</div>
+				</height>		
+				<_selected>
+					<sub src="grandparent()" trait="_item_resetClicks" />
+					<add src="me()" trait="clicked" />
+					<max> 0 </max>
+					<min> 1 </min>					
+				</_selected>	
+				<image name="stepDownIMG">	
+					<depth>
+						<copy src="me()" trait="_depth"/>
+						<add>4</add>
+					</depth>
+					<systemcolor>
+						<copy> &hudmain; </copy>
+						<onlyifnot src="parent()" trait="mouseover" />
+						<add>
+							<copy> &nosystemcolor; </copy>
+							<onlyif src="parent()" trait="mouseover" />
+						</add>
+					</systemcolor>
+					<x><copy src="parent()" trait="x"/></x>
+					<y><copy src="parent()" trait="y"/></y>
+					<width><copy src="parent()" trait="width"/></width>
+					<height><copy src="parent()" trait="height"/></height>
+					<filename>Interface\Shared\scrollbar\arrow_down.dds</filename>
+				</image>
+			</hotrect>	
+			
+			<hotrect name="jumpUp">
+				<target> &true; </target>
+				<clicksound> UIMenuOK </clicksound>
+				<y>
+					<copy src="stepUp" trait="height"/>
+				</y>
+				<width><copy src="ScrollBox" trait="width"/></width>
+				<height>
+					<copy src="scrollBar" trait="y"/>
+					<sub> <copy src="me()" trait="y"/> </sub>
+				</height>	
+				<_selected>
+					<sub src="grandparent()" trait="_item_resetClicks" />
+					<add src="me()" trait="clicked" />
+					<max> 0 </max>
+					<min> 1 </min>					
+				</_selected>		
+				<image name="jumpUpIMG">
+					<depth>
+						<copy src="me()" trait="_depth"/>
+						<add>6</add>
+					</depth>	
+					<alpha>25</alpha>
+					<systemcolor> &nosystemcolor; </systemcolor>
+					<x><copy src="parent()" trait="x"/></x>
+					<y><copy src="parent()" trait="y"/></y>
+					<width><copy src="parent()" trait="width"/></width>
+					<height><copy src="parent()" trait="height"/></height>
+					<filename>Interface\Shared\solid.dds</filename>
+					<visible> <copy src="parent()" trait="mouseover"/> </visible>
+				</image>
+			</hotrect>	
+			
+			<hotrect name="jumpDown">
+				<target> &true; </target>
+				<clicksound> UIMenuOK </clicksound>
+				<y>
+					<copy src="scrollBar" trait="y"/>
+					<add> <copy src="scrollBar" trait="height"/> </add>
+				</y>
+				<width><copy src="ScrollBox" trait="width"/></width>
+				<height>
+					<copy src="stepDown" trait="y"/>
+					<sub> <copy src="me()" trait="y"/> </sub>
+				</height>	
+				<_selected>
+					<sub src="grandparent()" trait="_item_resetClicks" />
+					<add src="me()" trait="clicked" />
+					<max> 0 </max>
+					<min> 1 </min>					
+				</_selected>		
+				<image name="jumpDownIMG">
+					<depth>
+						<copy src="me()" trait="_depth"/>
+						<add>8</add>
+					</depth>
+					<alpha>25</alpha>
+					<systemcolor> &nosystemcolor; </systemcolor>
+					<x><copy src="parent()" trait="x"/></x>
+					<y><copy src="parent()" trait="y"/></y>
+					<width><copy src="parent()" trait="width"/></width>
+					<height><copy src="parent()" trait="height"/></height>
+					<filename>Interface\Shared\solid.dds</filename>
+					<visible> <copy src="parent()" trait="mouseover"/> </visible>
+				</image>
+			</hotrect>	
+		</rect>
+<!--<rect name="list_box">-->
